@@ -1,6 +1,5 @@
 package com.example.redis.repository;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 import com.example.redis.entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
