@@ -1,5 +1,6 @@
 package com.example.redis.repository;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import com.example.redis.entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -25,9 +26,11 @@ public class ProductDao {
     }
 
     public Product findProductById(int id){
+        System.out.println("DB call");
         return (Product) template.opsForHash().get(HASH_KEY,id);
     }
 
+//    test
     public String deleteProduct(int id){
         template.opsForHash().delete(HASH_KEY,id);
         return "Product Removed";

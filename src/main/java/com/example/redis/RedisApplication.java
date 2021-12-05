@@ -5,6 +5,9 @@ import com.example.redis.repository.ProductDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,6 +15,7 @@ import java.util.List;
 @SpringBootApplication
 @RestController
 @RequestMapping("/product")
+@EnableCaching
 public class RedisApplication {
 
 	@Autowired
@@ -23,16 +27,19 @@ public class RedisApplication {
 	}
 
 	@GetMapping
+//	@Cacheable(key = "#id" ,value = "Product")
 	public List<Product> getAllProduct(){
 		return dao.finaAll();
 	}
 
 	@GetMapping("/{id}")
+	@Cacheable(key = "#id" ,value = "Product")
 	public Product getProduct(@PathVariable int id){
 		return dao.findProductById(id);
 	}
 
 	@DeleteMapping("/{id}")
+	@CacheEvict(key = "#id", value = "Product")
 	public String remove(@PathVariable int id){
 		return dao.deleteProduct(id);
 	}
